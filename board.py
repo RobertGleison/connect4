@@ -1,15 +1,16 @@
 import numpy as np
 
 class Board:
+    """ Classe para guardar os estados do tabuleiro do jogo"""
 
     def __init__(self, rows=6, columns=7, square_size = 100):
         self.rows = rows
         self.columns = columns
         self.data = np.zeros((rows, columns))
         self.square_size = square_size
-        self.width = columns * square_size
-        self.height = (rows + 1) * square_size
-        self.radius = int(square_size / 2 -5)
+        self.width = (4+columns) * square_size
+        self.height = (rows + 2) * square_size
+        self.radius = int(square_size / 2 - 7)
        
 
     def drop_piece(self, row, col, piece):
