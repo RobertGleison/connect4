@@ -30,6 +30,8 @@ class Connect4:
         size = (width, height)
         screen = pygame.display.set_mode(size)
 
+        self.draw_board(data)
+
         # self.board.draw_board(screen)
 
         # myfont = pygame.font.SysFont("monospace", 75)
@@ -40,19 +42,18 @@ class Connect4:
                     sys.exit()
 
                 if event.type == pygame.MOUSEMOTION:
-                    pygame.draw.rect(screen, colors.WHITE, (0, 0, width, square_size))
+                    pygame.draw.rect(screen, colors.WHITE, (0, 0, width, square_size-14))
                     posx = event.pos[0]
                     if self.turn == 0:
-                        pygame.draw.circle(screen, colors.RED, (posx, int(square_size / 2)), radius)
+                        pygame.draw.circle(screen, colors.RED, (posx, int(square_size / 2)-7), radius)
                     else:
                         pygame.draw.circle(screen, colors.YELLOW, (posx, int(square_size / 2)), radius)
-                    pygame.display.update()
+                pygame.display.update()
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pygame.draw.rect(screen, colors.WHITE, (0, 0, width, square_size))
                     posx = event.pos[0]
                     col = int(math.floor((posx + 2) / square_size))
-
 
 
                     ### NOTA: acho que dá pra resumir esses dois próximos blocos num só, tá tudo muito repetido aqui
@@ -73,14 +74,14 @@ class Connect4:
                                 # screen.blit(label, (40, 10))
                                 self.game_over = True
 
-                self.print_board()
-                self.draw_board(data)
+                    self.print_board()
+                    self.draw_board(data)
 
-                self.turn += 1
-                self.turn = self.turn % 2
+                    self.turn += 1
+                    self.turn = self.turn % 2
 
-                if self.game_over:
-                    pygame.time.wait(3000)
+                    if self.game_over:
+                        pygame.time.wait(3000)
 
 
     def draw_board(self, data):
@@ -112,9 +113,9 @@ class Connect4:
         for c in range(self.columns):
             for r in range(self.rows):		
                 if data[r][c] == 1:
-                    pygame.draw.circle(screen, colors.RED, (int(c*square_size+square_size/2), height-int(r*square_size+square_size/2)), radius)
+                    pygame.draw.circle(screen, colors.RED, (int(c*square_size+square_size/2), height-int((r+3/2)*square_size+square_size/2)), radius)
                 elif data[r][c] == 2: 
-                    pygame.draw.circle(screen, colors.YELLOW, (int(c*square_size+square_size/2), height-int(r*square_size+square_size/2)), radius)
+                    pygame.draw.circle(screen, colors.YELLOW, (int(c*square_size+square_size/2), height-int((r+3/2)*square_size+square_size/2)), radius)
         pygame.display.update()
 
 
