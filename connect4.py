@@ -47,19 +47,19 @@ class Connect4:
                     if self.turn == 0:
                         pygame.draw.circle(screen, colors.RED, (posx, int(square_size / 2)-7), radius)
                     else:
-                        pygame.draw.circle(screen, colors.YELLOW, (posx, int(square_size / 2)), radius)
+                        pygame.draw.circle(screen, colors.YELLOW, (posx, int(square_size / 2)-7), radius)
                 pygame.display.update()
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pygame.draw.rect(screen, colors.WHITE, (0, 0, width, square_size))
                     posx = event.pos[0]
-                    col = int(math.floor((posx + 2) / square_size))
+                    col = int(math.floor((posx) / square_size))
 
 
                     ### NOTA: acho que dá pra resumir esses dois próximos blocos num só, tá tudo muito repetido aqui
                     if self.turn == 0:
                         if self.board.is_valid_location(col):
-                            row = self.board.get_next_open_row(col) + 1
+                            row = self.board.get_next_open_row(col) 
                             self.board.drop_piece(row, col, 1)
                             if GameLogic.winning_move(data, 1, self.rows, self.columns):
                                 # label = myfont.render("Player 1 wins!!", 1, colors.RED)
@@ -67,7 +67,7 @@ class Connect4:
                                 self.game_over = True
                     else:
                         if self.board.is_valid_location(col):
-                            row = self.board.get_next_open_row(col) + 1
+                            row = self.board.get_next_open_row(col) 
                             self.board.drop_piece(row, col, 2)
                             if GameLogic.winning_move(data, 2, self.rows, self.columns):
                                 # label = myfont.render("Player 2 wins!!", 1, colors.YELLOW)
@@ -113,9 +113,9 @@ class Connect4:
         for c in range(self.columns):
             for r in range(self.rows):		
                 if data[r][c] == 1:
-                    pygame.draw.circle(screen, colors.RED, (int(c*square_size+square_size/2), height-int((r+3/2)*square_size+square_size/2)), radius)
+                    pygame.draw.circle(screen, colors.RED, (int(c*square_size+square_size/2), height-int((r+3/2)*square_size)), radius)
                 elif data[r][c] == 2: 
-                    pygame.draw.circle(screen, colors.YELLOW, (int(c*square_size+square_size/2), height-int((r+3/2)*square_size+square_size/2)), radius)
+                    pygame.draw.circle(screen, colors.YELLOW, (int(c*square_size+square_size/2), height-int((r+3/2)*square_size)), radius)
         pygame.display.update()
 
 
