@@ -1,123 +1,64 @@
+import numpy as np
 import pygame
 import sys
 import math
+import constants as c
+import game_logic as game
 from board import Board
-from gameLogic import GameLogic
-import colors
 
-class Connect4:
-    """Classe para criar a imagem da interface do tabuleiro"""
-    
+def start_game(bd):
+	pygame.init()
+	rad = c.RADIUS
+	myfont = pygame.font.SysFont("monospace", 75)
+	game_over = False
+	turn = 0
+	
 
-    def __init__(self, rows = 6, columns = 7):
-        self.rows = rows
-        self.columns = columns
-        self.board = Board()
-        self.game_over = False 
-        self.turn = 0
+	board = bd.get_board()
+	bd.print_board()
+	bd.draw_board()
+	pygame.display.update()
 
-    def print_board(self):
-        print(self.board)
+	while not game_over:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				sys.exit()
+			if event.type == pygame.MOUSEMOTION:
+				pygame.draw.rect(bd.screen, c.BACKGORUND_COLOR, (0,0, bd.width, bd.pixels))
+				posx = event.pos[0]
+				if turn == 0:
+					pygame.draw.circle(bd.screen, c.PLAYER_COLOR, (posx, int(bd.pixels/2)), rad)
+				else: 
+					pygame.draw.circle(bd.screen, c.IA_COLOR, (posx, int(bd.pixels/2)), rad)
+			pygame.display.update()
 
-    def play_game(self):
-        pygame.init()
-
-        square_size = self.board.square_size
-        width = self.board.width
-        height = self.board.height
-        radius = self.board.radius
-        data = self.board.data
-        size = (width, height)
-        screen = pygame.display.set_mode(size)
-
-        self.draw_board(data)
-
-        # self.board.draw_board(screen)
-
-        # myfont = pygame.font.SysFont("monospace", 75)
-
-        while not self.game_over:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
-
-                if event.type == pygame.MOUSEMOTION:
-                    pygame.draw.rect(screen, colors.WHITE, (0, 0, width, square_size-14))
-                    posx = event.pos[0]
-                    if self.turn == 0:
-                        pygame.draw.circle(screen, colors.RED, (posx, int(square_size / 2)-7), radius)
-                    else:
-                        pygame.draw.circle(screen, colors.YELLOW, (posx, int(square_size / 2)-7), radius)
-                pygame.display.update()
-
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    pygame.draw.rect(screen, colors.WHITE, (0, 0, width, square_size))
-                    posx = event.pos[0]
-                    col = int(math.floor((posx) / square_size))
+			if event.type == pygame.MOUSEBUTTONDOWN:
+				pygame.draw.rect(bd.screen, c.BACKGORUND_COLOR, (0,0, bd.width, bd.pixels))
+				posx = event.pos[0]
+				col = int(math.floor(posx/bd.pixels))
+				if game.is_valid_location(board, col):
+					row = game.get_next_open_row(board, col)
+					if turn == 0:
+						game.drop_piece(board, row, col, 1)
+						if game.winning_move(board, 1):
+							label = myfont.render("Player 1 wins!!", 1, c.PLAYER_COLOR)
+							bd.screen.blit(label, (40,10))
+							game_over = True
 
 
-                    ### NOTA: acho que dá pra resumir esses dois próximos blocos num só, tá tudo muito repetido aqui
-                    if self.turn == 0:
-                        if self.board.is_valid_location(col):
-                            row = self.board.get_next_open_row(col) 
-                            self.board.drop_piece(row, col, 1)
-                            if GameLogic.winning_move(data, 1, self.rows, self.columns):
-                                # label = myfont.render("Player 1 wins!!", 1, colors.RED)
-                                # screen.blit(label, (40, 10))
-                                self.game_over = True
-                    else:
-                        if self.board.is_valid_location(col):
-                            row = self.board.get_next_open_row(col) 
-                            self.board.drop_piece(row, col, 2)
-                            if GameLogic.winning_move(data, 2, self.rows, self.columns):
-                                # label = myfont.render("Player 2 wins!!", 1, colors.YELLOW)
-                                # screen.blit(label, (40, 10))
-                                self.game_over = True
+					# # Ask for Player 2 Input
+					else:				
+						game.drop_piece(board, row, col, 2)
+						if game.winning_move(board, 2):
+							label = myfont.render("Player 2 wins!!", 1, c.IA_COLOR)
+							bd.screen.blit(label, (40,10))
+							game_over = True
 
-                    self.print_board()
-                    self.draw_board(data)
+					bd.print_board()
+					bd.draw_board()
 
-                    self.turn += 1
-                    self.turn = self.turn % 2
+					turn += 1
+					turn = turn % 2
 
-                    if self.game_over:
-                        pygame.time.wait(3000)
-
-
-    def draw_board(self, data):
-        square_size = self.board.square_size
-        width = self.board.width
-        height = self.board.height
-        radius = self.board.radius
-        data = self.board.data
-        size = (width, height)
-        screen = pygame.display.set_mode(size)
-
-        pygame.draw.rect(screen, colors.WHITE, (0, 0, width, height)) 		# cria fundo branco 
-        pygame.draw.rect(screen, colors.GRAY, (2*square_size-10, square_size-10, self.columns*square_size+24, self.rows*square_size+24), 0, 30)
-        pygame.draw.rect(screen, colors.BLUE, (2*square_size-10, square_size-10, self.columns*square_size+20, self.rows*square_size+20), 0, 30)		# cria colors.GRAYs azuis
-
-        for c in range(self.columns):
-            for r in range(self.rows):
-                pygame.draw.circle(screen, colors.WHITE, (int(c*square_size+5*square_size/2), int(r*square_size+square_size+square_size/2)), radius) 	 # cria círculos (espaços)
-
-    # 
-    # for c in range(self.columns):
-    #     for r in range(self.rows):		
-    #         if data[r][c] == PLAYER_PIECE:
-    #             pygame.draw.circle(screen, colors.RED, (int(c*square_size+square_size/2), height-int((r+3/2)*square_size)), radius)
-    #         elif data[r][c] == AI_PIECE: 
-    #             pygame.draw.circle(screen, colors.YELLOW, (int(c*square_size+square_size/2), height-int((r+3/2)*square_size)), radius)
-
-    # VERSAO SEM IA     
-        for c in range(self.columns):
-            for r in range(self.rows):		
-                if data[r][c] == 1:
-                    pygame.draw.circle(screen, colors.RED, (int(c*square_size+square_size/2), height-int((r+3/2)*square_size)), radius)
-                elif data[r][c] == 2: 
-                    pygame.draw.circle(screen, colors.YELLOW, (int(c*square_size+square_size/2), height-int((r+3/2)*square_size)), radius)
-        pygame.display.update()
-
-
-
-
+					if game_over:
+						pygame.time.wait(3000)

@@ -1,5 +1,10 @@
-from connect4 import Connect4
+import connect4
+from board import Board
 
+def main():
+    board = Board()
+    connect4.start_game(board)
+    
 if __name__ == "__main__":
-    game = Connect4()
-    game.play_game()
+    main()
+

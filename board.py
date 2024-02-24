@@ -1,29 +1,48 @@
 import numpy as np
+import constants as c
+import pygame 
 
 class Board:
-    """ Classe para guardar os estados do tabuleiro do jogo"""
+    def __init__(self):
+        self.rows = c.ROWS
+        self.columns = c.COLUMNS
+        self.pixels = c.SQUARESIZE
+        self.width = c.WIDTH
+        self.height = c.HEIGHT
+        self.size = (self.width, self.height)
+        self.screen = pygame.display.set_mode(self.size)
+        self.board = np.zeros((self.rows, self.columns))
+            
+    def get_board(self):
+        return self.board
 
-    def __init__(self, rows=6, columns=7, square_size = 100):
-        self.rows = rows
-        self.columns = columns
-        self.data = np.zeros((rows, columns))
-        self.square_size = square_size
-        self.width = (4+columns) * square_size
-        self.height = (rows + 2) * square_size
-        self.radius = int(square_size / 2 - 7)
-       
+    def print_board(self):
+        print(np.flip(self.board, 0))
+        print()
+        
+    def draw_board(self):
+        rad = c.RADIUS
+        for col in range(self.columns):
+            for row in range(self.rows):
+                rect_coordinates = (col*self.pixels, row*self.pixels+self.pixels, self.pixels, self.pixels)
+                # center_of_circle = (col * self.pixels + self.pixels // 2, row * self.pixels + self.pixels // 2)
 
-    def drop_piece(self, row, col, piece):
-        self.data[row][col] = piece
+                center_of_circle = (int(col*self.pixels+self.pixels/2), int(row*self.pixels+self.pixels+self.pixels/2))
+                pygame.draw.rect(self.screen, c.TABLE_COLOR, rect_coordinates)
+                pygame.draw.circle(self.screen, c.BACKGORUND_COLOR, center_of_circle, rad)
+        
+        for col in range(self.columns):
+            for row in range(self.rows):	
+                center_of_circle = (int(col*self.pixels+self.pixels/2), self.height-int(row*self.pixels+self.pixels/2))
+                if self.board[row][col] == 1:
+                    pygame.draw.circle(self.screen, c.PLAYER_COLOR, center_of_circle, rad)
+                elif self.board[row][col] == 2: 
+                    pygame.draw.circle(self.screen, c.IA_COLOR, center_of_circle, rad)
+        pygame.display.update()     
 
-    def is_valid_location(self, col):
-        return self.data[self.rows - 1][col] == 0
+    
 
-    def get_next_open_row(self, col):
-        for r in range(self.rows):
-            if self.data[r][col] == 0:
-                return r
 
-    def __str__(self):
-        return str(np.flip(self.data, 0))
 
+
+        
