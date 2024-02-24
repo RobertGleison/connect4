@@ -38,14 +38,18 @@ class Board:
                 pygame.draw.circle(self.screen, c.BACKGORUND_COLOR, center_of_circle, rad)
         
 
-        for col in range(self.columns):
-            for row in range(self.rows):	
-                center_of_circle = (int(col*self.pixels+self.pixels/2), self.height-int(row*self.pixels+self.pixels/2))
-                if self.board[row][col] == 1:
-                    pygame.draw.circle(self.screen, c.PLAYER_COLOR, center_of_circle, rad)
-                elif self.board[row][col] == 2: 
-                    pygame.draw.circle(self.screen, c.IA_COLOR, center_of_circle, rad)
+        # for col in range(self.columns):
+        #     for row in range(self.rows):	
+        #         center_of_circle = (int(col*self.pixels+self.pixels/2), self.height-int(row*self.pixels+self.pixels/2))
+        #         if self.board[row][col] == 1:
+        #             pygame.draw.circle(self.screen, c.PLAYER_COLOR, center_of_circle, rad)
+        #         elif self.board[row][col] == 2: 
+        #             pygame.draw.circle(self.screen, c.IA_COLOR, center_of_circle, rad)
         pygame.display.update()     
+
+    def draw_new_piece(self, row, col, piece):
+        center_of_circle = (int(col*self.pixels+self.pixels/2), self.height-int(row*self.pixels+self.pixels/2))
+        pygame.draw.circle(self.screen, c.PIECES_COLORS[piece], center_of_circle, c.RADIUS)
 
     
 

@@ -4,7 +4,8 @@ def drop_piece(board, row, col, piece):
 	board[row][col] = piece
 
 def is_valid_location(board, col):
-	return board[c.ROWS-1][col] == 0
+	# return board[c.ROWS-1][col] == 0
+	return col >= 0 and col < c.COLUMNS
 
 def get_next_open_row(board, col):
 	for row in range(c.ROWS):

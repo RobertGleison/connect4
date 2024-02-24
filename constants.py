@@ -5,6 +5,8 @@ SHADOW_COLOR = (170, 170, 170) #Grey
 PLAYER_COLOR = (255,0,0) #Red
 IA_COLOR = (255,255,0) #Yellow
 
+PIECES_COLORS = [BACKGORUND_COLOR, PLAYER_COLOR, IA_COLOR]
+
 # Constants for the data matrix
 ROWS = 6
 COLUMNS = 7
