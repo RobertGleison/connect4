@@ -1,7 +1,7 @@
 # Colors
-TABLE_COLOR = (60,100,255) #Blue
+BOARD_COLOR = (60,100,255) #Blue
 BACKGORUND_COLOR = (230,230,230) #Black 
-EDGES_COLOR = (170, 170, 170) #Grey
+SHADOW_COLOR = (170, 170, 170) #Grey
 PLAYER_COLOR = (255,0,0) #Red
 IA_COLOR = (255,255,0) #Yellow
 
@@ -11,7 +11,7 @@ COLUMNS = 7
 
 # Constants for the board image
 SQUARESIZE = 100    # size of each square that will divide the screen 
-RADIUS = 45     # radius of each player piece
+RADIUS = 43     # radius of each player piece
 
 # Constants for the interface (scren)
 WIDTH = (4+COLUMNS) * SQUARESIZE    # width of the screen = board + 2 empty columns on each side of the screen
