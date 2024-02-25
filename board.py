@@ -11,6 +11,7 @@ class Board:
         self.height = c.HEIGHT
         self.size = (self.width, self.height)
         self.screen = pygame.display.set_mode(self.size)
+        pygame.display.set_caption("Connect4")
         self.board = np.zeros((self.rows, self.columns))
             
     def get_board(self):
@@ -22,7 +23,7 @@ class Board:
     def draw_board(self):
         rad = c.RADIUS
 
-        self.screen.fill(c.BACKGORUND_COLOR)    # turns the background "background color"
+        self.screen.fill(c.BACKGROUND_COLOR)    # turns the background "background color"
 
         shadow_coordinates = (2*self.pixels-10, self.pixels-10, self.columns*self.pixels+24, self.rows*self.pixels+24)
         board_coordinates = (2*self.pixels-10, self.pixels-10, self.columns*self.pixels+20, self.rows*self.pixels+20)
@@ -33,15 +34,16 @@ class Board:
         for col in range(self.columns):
             for row in range(self.rows):
                 center_of_circle = (int((col+5/2)*self.pixels), int((row+3/2)*self.pixels))
-                pygame.draw.circle(self.screen, c.BACKGORUND_COLOR, center_of_circle, rad)
+                pygame.draw.circle(self.screen, c.BACKGROUND_COLOR, center_of_circle, rad)
         pygame.display.update()     
 
     def draw_new_piece(self, row, col, piece):
         center_of_circle = (int(col*self.pixels+self.pixels/2), self.height-int(row*self.pixels+self.pixels/2))
         pygame.draw.circle(self.screen, c.PIECES_COLORS[piece], center_of_circle, c.RADIUS)
 
-    
+        
 
+    
 
 
 
