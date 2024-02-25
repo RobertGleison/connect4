@@ -39,7 +39,7 @@ def play_game(bd):
 				pygame.draw.rect(bd.screen, c.BACKGORUND_COLOR, (0,0, bd.width, bd.pixels-14))
 				posx = event.pos[0]
 				col = int(math.floor(posx/bd.pixels)) - 2
-				if game.is_valid_location(board, col):
+				if game.is_valid_location(col):
 					row = game.get_next_open_row(board, col)
 					game.drop_piece(board, row, col, turn)	# adds the new piece to the data matrix
 					bd.draw_new_piece(row+1, col+2, turn) 	# adds new piece to the screen
