@@ -3,7 +3,7 @@ import constants as c
 import pygame 
 
 class Board:
-    def __init__(self):
+    def __init__(self) -> None:
         self.rows = c.ROWS
         self.columns = c.COLUMNS
         self.pixels = c.SQUARESIZE
@@ -14,13 +14,13 @@ class Board:
         pygame.display.set_caption("Connect4")
         self.board = np.zeros((self.rows, self.columns))
             
-    def get_board(self):
+    def get_board(self) -> np.ndarray:
         return self.board
 
-    def print_board(self):
+    def print_board(self) -> None:
         print(np.flip(self.board, 0), "\n")
         
-    def draw_board(self):
+    def draw_board(self) -> None:
         rad = c.RADIUS
 
         self.screen.fill(c.BACKGROUND_COLOR)    # turns the background "background color"
@@ -37,7 +37,7 @@ class Board:
                 pygame.draw.circle(self.screen, c.BACKGROUND_COLOR, center_of_circle, rad)
         pygame.display.update()     
 
-    def draw_new_piece(self, row, col, piece):
+    def draw_new_piece(self, row: int, col: int, piece: int) -> None:
         center_of_circle = (int(col*self.pixels+self.pixels/2), self.height-int(row*self.pixels+self.pixels/2))
         pygame.draw.circle(self.screen, c.PIECES_COLORS[piece], center_of_circle, c.RADIUS)
 

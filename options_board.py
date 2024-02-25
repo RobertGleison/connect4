@@ -10,7 +10,7 @@ class OptionsBoard:
         self.size = (self.width, self.height)
         self.screen = pygame.display.set_mode(self.size)
 
-    def draw_button(self, x, y, width, height, text):
+    def draw_button(self, x: int, y: int, width: int, height: int, text: str) -> None:
         pygame.draw.rect(self.screen, c.SHADOW_COLOR, (x, y, width, height), 0, 30)
         font = pygame.font.SysFont("Monospace", 20, bold=True)
 
@@ -19,7 +19,7 @@ class OptionsBoard:
         text_rect.center = (x + width / 2, y + height / 2)
         self.screen.blit(text_surface, text_rect)
 
-    def draw_options_board(self):
+    def draw_options_board(self) -> int:
 
         while True:
             game_mode = 0

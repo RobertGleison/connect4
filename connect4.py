@@ -5,8 +5,11 @@ import math
 import itertools
 import constants as c
 import game_logic as game
+import heuristics as h
+from board import Board
+from options_board import OptionsBoard
 
-def start_game(bd, options_bd):
+def start_game(bd: Board, options_bd: OptionsBoard) -> None:
 	pygame.init()
 	game_mode = options_bd.draw_options_board()
 
@@ -16,12 +19,10 @@ def start_game(bd, options_bd):
 		pygame.display.update()
 		play_game(bd, game_mode)
 
-'''@TODO: ATENÇÃO: teoricamente o play game roda indiferente do game mode pq eu n implementei nada, 
-mas provavelmente vamos ter que fazer um if com as opçoes e codigos pra cada if'''
 
-def play_game(bd, game_mode):
-	print("enter play game")
+def play_game(bd: Board, game_mode: OptionsBoard) -> None:
 	board = bd.get_board()	# pieces matrix
+	print(type(board))
 	rad = c.RADIUS
 	game_over = False
 
@@ -42,23 +43,66 @@ def play_game(bd, game_mode):
 				pygame.draw.circle(bd.screen, c.PIECES_COLORS[turn], (posx, int(bd.pixels/2)-7), rad)
 			pygame.display.update()
 
-			if event.type == pygame.MOUSEBUTTONDOWN:
-				pygame.draw.rect(bd.screen, c.BACKGROUND_COLOR, (0,0, bd.width, bd.pixels-14))
-				posx = event.pos[0]
-				col = int(math.floor(posx/bd.pixels)) - 2
+			if game_mode == 1:
+				if event.type == pygame.MOUSEBUTTONDOWN:
+					pygame.draw.rect(bd.screen, c.BACKGROUND_COLOR, (0,0, bd.width, bd.pixels-14))
+					posx = event.pos[0]
+					col = int(math.floor(posx/bd.pixels)) - 2
 
-				if game.is_valid_location(col):
-					row = game.get_next_open_row(board, col)
-					game.drop_piece(board, row, col, turn)	# adds the new piece to the data matrix
-					
-					bd.draw_new_piece(row+1, col+2, turn) 	# adds new piece to the screen
-					if game.winning_move(board, turn):
-						label = myfont.render("Player " + str(turn) +" wins!", 1, c.PIECES_COLORS[turn])
-						bd.screen.blit(label, (350,15))
-						game_over = True
-						pygame.display.update()
+					if game.is_valid_location(col):
+						row = game.get_next_open_row(board, col)
+						game.drop_piece(board, row, col, turn)	# adds the new piece to the data matrix
+						
+						bd.draw_new_piece(row+1, col+2, turn) 	# adds new piece to the screen
+						if game.winning_move(board, turn):
+							label = myfont.render("Player " + str(turn) +" wins!", 1, c.PIECES_COLORS[turn])
+							bd.screen.blit(label, (350,15))
+							game_over = True
+							pygame.display.update()
 
-					bd.print_board()
-					turn = next(turns)
+						bd.print_board()
+						turn = next(turns)
+
+			elif game_mode == 2:
+				if event.type == pygame.MOUSEBUTTONDOWN:
+					pygame.draw.rect(bd.screen, c.BACKGROUND_COLOR, (0,0, bd.width, bd.pixels-14))
+					posx = event.pos[0]
+					col = int(math.floor(posx/bd.pixels)) - 2
+
+					if game.is_valid_location(col):
+						row = game.get_next_open_row(board, col)
+						game.drop_piece(board, row, col, turn)	# adds the new piece to the data matrix
+						
+						bd.draw_new_piece(row+1, col+2, turn) 	# adds new piece to the screen
+						if game.winning_move(board, turn):
+							label = myfont.render("Player " + str(turn) +" wins!", 1, c.PIECES_COLORS[turn])
+							bd.screen.blit(label, (350,15))
+							game_over = True
+							pygame.display.update()
+
+						bd.print_board()
+						h.a_star(bd)
+						turn = next(turns)
+
+			elif game_mode == 3:
+				if event.type == pygame.MOUSEBUTTONDOWN:
+					pygame.draw.rect(bd.screen, c.BACKGROUND_COLOR, (0,0, bd.width, bd.pixels-14))
+					posx = event.pos[0]
+					col = int(math.floor(posx/bd.pixels)) - 2
+
+					if game.is_valid_location(col):
+						row = game.get_next_open_row(board, col)
+						game.drop_piece(board, row, col, turn)	# adds the new piece to the data matrix
+						
+						bd.draw_new_piece(row+1, col+2, turn) 	# adds new piece to the screen
+						if game.winning_move(board, turn):
+							label = myfont.render("Player " + str(turn) +" wins!", 1, c.PIECES_COLORS[turn])
+							bd.screen.blit(label, (350,15))
+							game_over = True
+							pygame.display.update()
+
+						bd.print_board()
+						h.monte_carlo_tree_search(bd)
+						turn = next(turns)
 
 	pygame.time.wait(3500)

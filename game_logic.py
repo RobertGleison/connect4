@@ -1,17 +1,18 @@
 import constants as c
+import numpy as np
 
-def drop_piece(board, row, col, piece):
+def drop_piece(board: np.ndarray, row: int, col: int, piece: int):
 	board[row][col] = piece
 
-def is_valid_location(col):
+def is_valid_location(col: int):
 	return col >= 0 and col < c.COLUMNS
 
-def get_next_open_row(board, col):
+def get_next_open_row(board: np.ndarray, col):
 	for row in range(c.ROWS):
 		if board[row][col] == 0:
 			return row
 
-def winning_move(board, piece):
+def winning_move(board: np.ndarray, piece: int):
 	# Check horizontal
 	for col in range(c.COLUMNS-3):
 		for row in range(c.ROWS):
