@@ -28,7 +28,7 @@ def play_game(bd, game_mode):
 	turns = itertools.cycle([1, 2])  # iteration between turns (player 1 and player 2)
 	turn = next(turns)
 
-	myfont = pygame.font.SysFont("Monospace", 50)
+	myfont = pygame.font.SysFont("Monospace", 50, bold=True)
 	
 	while not game_over:
 		for event in pygame.event.get():
@@ -53,12 +53,12 @@ def play_game(bd, game_mode):
 					
 					bd.draw_new_piece(row+1, col+2, turn) 	# adds new piece to the screen
 					if game.winning_move(board, turn):
-						label = myfont.render("Player " + str(turn) +" wins!!!", 1, c.PIECES_COLORS[turn])
-						bd.screen.blit(label, (300,15))
+						label = myfont.render("Player " + str(turn) +" wins!", 1, c.PIECES_COLORS[turn])
+						bd.screen.blit(label, (350,15))
 						game_over = True
 						pygame.display.update()
 
 					bd.print_board()
 					turn = next(turns)
 
-	pygame.time.wait(3000)
+	pygame.time.wait(3500)
