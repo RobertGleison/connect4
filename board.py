@@ -25,6 +25,7 @@ class Board:
 
         self.screen.fill(c.BACKGROUND_COLOR)    # turns the background "background color"
 
+        # draw the board and its shadow:
         shadow_coordinates = (2*self.pixels-10, self.pixels-10, self.columns*self.pixels+24, self.rows*self.pixels+24)
         board_coordinates = (2*self.pixels-10, self.pixels-10, self.columns*self.pixels+20, self.rows*self.pixels+20)
         pygame.draw.rect(self.screen, c.SHADOW_COLOR, shadow_coordinates, 0, 30)  # draws the shadow with rounded corners
@@ -36,6 +37,7 @@ class Board:
                 center_of_circle = (int((col+5/2)*self.pixels), int((row+3/2)*self.pixels))
                 pygame.draw.circle(self.screen, c.BACKGROUND_COLOR, center_of_circle, rad)
         pygame.display.update()     
+
 
     def draw_new_piece(self, row: int, col: int, piece: int) -> None:
         center_of_circle = (int(col*self.pixels+self.pixels/2), self.height-int(row*self.pixels+self.pixels/2))

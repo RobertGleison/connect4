@@ -7,7 +7,7 @@ def drop_piece(board: np.ndarray, row: int, col: int, piece: int):
 def is_valid_location(col: int):
 	return col >= 0 and col < c.COLUMNS
 
-def get_next_open_row(board: np.ndarray, col):
+def get_next_open_row(board: np.ndarray, col: int):
 	for row in range(c.ROWS):
 		if board[row][col] == 0:
 			return row
