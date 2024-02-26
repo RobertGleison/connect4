@@ -34,14 +34,22 @@ class Interface:
     def draw_options_board(self):
             self.screen.fill(c.BACKGROUND_COLOR)
 
+            font = pygame.font.Font("./fonts/04B_30__.TTF", 60)
+            text_surface = font.render("Connect 4", True, c.BUTTON_TEXT_COLOR)
+            text_rect = text_surface.get_rect()
+            text_rect.center = (560, 230)
+            self.screen.blit(text_surface, text_rect)
+            
+
             # Draw buttons (self.height/2 = 400)
-            self.draw_button(self.height/2, 50, 300, 50, "Player vs Player")
-            self.draw_button(self.height/2, 150, 300, 50, "Player vs IA (A*)")
-            self.draw_button(self.height/2, 250, 300, 50, "Player vs IA (MCTS)")
+            self.draw_button(self.height/2, 350, 300, 50, "Player x Player")
+            self.draw_button(self.height/2, 450, 300, 50, "Player x IA")
+            # self.draw_button(self.height/2, 250, 300, 50, "Player vs IA (MCTS)")
 
     def draw_button(self, x: int, y: int, width: int, height: int, text: str) -> None:
         pygame.draw.rect(self.screen, c.SHADOW_COLOR, (x, y, width, height), 0, 30)
-        font = pygame.font.SysFont("Monospace", 20, bold=True)
+        # font = pygame.font.SysFont("Minecraft", 20, bold=True)
+        font = pygame.font.Font("./fonts/Minecraft.ttf", 25)
 
         text_surface = font.render(text, True, c.BUTTON_TEXT_COLOR)
         text_rect = text_surface.get_rect()
@@ -59,20 +67,30 @@ class Interface:
                     mouse_x, mouse_y = pygame.mouse.get_pos()
                     
                     # Check if buttons are clicked
-                    if (self.width/2 - 150) <= mouse_x <= (self.width/2 + 150) and 50 <= mouse_y <= 100:
+                    if (self.width/2 - 150) <= mouse_x <= (self.width/2 + 150) and 350 <= mouse_y <= 400:
                         print("Player vs Player selected")
                         game_mode = 1
-                    elif (self.width/2 - 150) <= mouse_x <= (self.width/2 + 150) and 150 <= mouse_y <= 200:
-                        print("Player vs IA (A*) selected")
-                        game_mode = 2
-                    elif (self.width/2 - 150) <= mouse_x <= (self.width/2 + 150) and 250 <= mouse_y <= 300:
-                        print("Player vs IA (MCTS) selected")
-                        game_mode = 3
+                    elif (self.width/2 - 150) <= mouse_x <= (self.width/2 + 150) and 450 <= mouse_y <= 500:
+                        print("Player vs IA selected")
+                        self.draw_algorithms()
+                    #     game_mode = 2
+                    # elif (self.width/2 - 150) <= mouse_x <= (self.width/2 + 150) and 250 <= mouse_y <= 300:
+                    #     print("Player vs IA (MCTS) selected")
+                    #     game_mode = 3
 
             pygame.display.flip()
 
             if game_mode != 0:
                 return game_mode
+
+
+    def draw_algorithms(self):
+            self.screen.fill(c.BACKGROUND_COLOR)
+
+            # Draw buttons (self.height/2 = 400)
+            self.draw_button(self.height/2, 250, 300, 50, "A*")
+            self.draw_button(self.height/2, 350, 300, 50, "MCTS")
+            self.draw_button(self.height/2, 450, 300, 50, "Alpha Beta")
 
 
     def play_game(self, bd: Board, game_mode: int) -> None:
