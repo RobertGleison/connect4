@@ -1,6 +1,5 @@
 import numpy as np
 import constants as c
-import pygame 
 
 class Board:
     def __init__(self) -> None:

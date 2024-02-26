@@ -62,6 +62,6 @@ def handle_human_move(bd, interface, board: np.ndarray, turn: int, myfont, event
 	return game_over
 
 
-def handle_ia_move():
+def handle_ia_move(algorithm: int):
 	# call heuristics
 	return

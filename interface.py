@@ -103,12 +103,12 @@ class Interface:
                     elif game_mode == 2:
                         if turn == 1:
                             game_over = game.handle_human_move(bd, self, board, turn, myfont, event)
-                        game_over = game.handle_ia_move()
+                        game_over = game.handle_ia_move(2)
                         
                     elif game_mode == 3:
                         if turn == 1:
                             game_over = game.handle_human_move(bd, self, board, turn, myfont, event)
-                        game_over = game.handle_ia_move()
+                        game_over = game.handle_ia_move(3)
 
                     turn = next(turns)
         pygame.time.wait(3500)
