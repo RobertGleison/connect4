@@ -2,6 +2,7 @@ import constants as c
 import numpy as np
 import math
 import pygame
+import heuristics as h
 
 
 def drop_piece(board: np.ndarray, row: int, col: int, piece: int):
@@ -62,6 +63,13 @@ def handle_human_move(bd, interface, board: np.ndarray, turn: int, myfont, event
 	return game_over
 
 
-def handle_ia_move(algorithm: int):
-	# call heuristics
-	return
+def handle_ia_move(game_mode: int, board: np.ndarray, piece: int):
+	move = 0
+	if game_mode == 2:
+		move = h.a_star(board, piece)
+	elif game_mode == 3:
+		move = h.monte_carlo_tree_search(board, piece)
+	elif game_mode == 4:
+		move = h.alphabeta(board, piece)
+	return move
+	

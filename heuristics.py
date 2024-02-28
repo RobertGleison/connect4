@@ -6,6 +6,7 @@ def monte_carlo_tree_search(board: np.ndarray):
     return best_column
 
 def a_star(board: np.ndarray, piece: int):
-   
-	total_value = 0
 	return 0
+
+def alphabeta(board: np.ndarray, piece: int):
+    return 0
