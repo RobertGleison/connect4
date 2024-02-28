@@ -55,6 +55,32 @@ class Interface:
         text_rect.center = (x + width / 2, y + height / 2)
         self.screen.blit(text_surface, text_rect)
 
+
+    def choose_ia_option(self) -> int:
+        while True:
+            game_mode = 0
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    mouse_x, mouse_y = pygame.mouse.get_pos()
+                    
+                    if (self.width / 2 - 150) <= mouse_x <= (self.width / 2 + 150) and 250 <= mouse_y <= 300:
+                        print("A*")
+                        game_mode = 2
+                    elif (self.width / 2 - 150) <= mouse_x <= (self.width / 2 + 150) and 350 <= mouse_y <= 400:
+                        print("MCTS")
+                        game_mode = 3
+                    elif (self.width / 2 - 150) <= mouse_x <= (self.width / 2 + 150) and 450 <= mouse_y <= 500:
+                        print("Alpha Beta")
+                        game_mode = 4
+
+
+                pygame.display.flip()
+                if game_mode != 0:
+                    return game_mode
+
     def choose_option(self) -> int:
         while True:
             game_mode = 0
@@ -72,12 +98,18 @@ class Interface:
                     elif (self.width/2 - 150) <= mouse_x <= (self.width/2 + 150) and 450 <= mouse_y <= 500:
                         print("Player vs IA selected")
                         self.draw_algorithms()
+                        game_mode = 2
+                
 
             pygame.display.flip()
 
-            if game_mode != 0:
+            if game_mode == 1:
+                return game_mode
+            if game_mode == 2:
+                game_mode = self.choose_ia_option()
                 return game_mode
 
+    
 
     def draw_algorithms(self):
             self.screen.fill(c.BACKGROUND_COLOR)
