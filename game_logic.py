@@ -73,6 +73,7 @@ def show_winner(interface: any, myfont: any, turn: int) -> None:
 	interface.screen.blit(label, (350,15))
 
 def make_move(bd: Board, interface: any, board: np.ndarray, turn: int, myfont: any, move: int):
+	"""Make the move and see if the move is a winning move"""
 	game_over = False
 	if is_valid_location(move):
 		row = get_next_open_row(board, move)
@@ -87,14 +88,14 @@ def make_move(bd: Board, interface: any, board: np.ndarray, turn: int, myfont: a
 	return game_over
 
 def human_move(bd: Board, interface: any, board: np.ndarray, turn: int, myfont: any, event: any) -> bool:
-	"""Set the human move and see if this move won the game"""
+	"""Set the column of human move"""
 	col = hover_motion(interface, event)
 	game_over = make_move(bd, interface, board, turn, myfont, col)
 	return game_over
 
 
 def ai_move(bd: Board, interface: any, game_mode: int, board: np.ndarray, turn: int, myfont: any) -> int:
-	"""Set the ai move and see if this move won the game"""
+	"""Set the column of the AI move"""
 	ai_move = get_ai_move(bd, turn, game_mode)
 	game_over = make_move(bd, interface, board, turn, myfont, ai_move)
 	return game_over
