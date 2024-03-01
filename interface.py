@@ -5,6 +5,9 @@ import constants as c
 from board import Board
 import game_logic as game
 from dataclasses import dataclass
+import logging
+
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 @dataclass
@@ -33,10 +36,10 @@ class Interface:
 
     def play_game(self, bd: Board, game_mode: int) -> None:
         """Run the game"""
-        board = bd.get_board()	# pieces matrix
+        board = bd.get_board()	
         game_over = False
         myfont = pygame.font.SysFont("Monospace", 50, bold=True)
-        turns = itertools.cycle([1, 2])  # iteration between turns (player 1 and player 2)
+        turns = itertools.cycle([1, 2])  
         turn = next(turns)
         
         while not game_over:
@@ -66,7 +69,7 @@ class Interface:
 
     def draw_board(self) -> None:
         """Draw pygame board display"""
-        self.screen.fill(c.BACKGROUND_COLOR)    # turns the background "background color"
+        self.screen.fill(c.BACKGROUND_COLOR)    
 
         # draw the board and its shadow:
         shadow_coordinates = (2*self.pixels-10, self.pixels-10, self.columns*self.pixels+24, self.rows*self.pixels+24)

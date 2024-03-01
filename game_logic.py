@@ -4,6 +4,9 @@ import math
 import pygame
 import heuristics as h
 from board import Board
+import logging
+
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 def drop_piece(board: np.ndarray, row: int, col: int, piece: int):
@@ -18,8 +21,11 @@ def is_valid_location(col: int):
 
 def get_next_open_row(board: np.ndarray, col: int):
 	"""Given a column, return the first row avaiable to set a piece"""
+	logging.info("Enter drop_piece")
+
 	for row in range(c.ROWS):
 		if board[row][col] == 0:
+			logging.info("Leaving drop_piece")
 			return row
 		
 
@@ -72,6 +78,7 @@ def show_winner(interface: any, myfont: any, turn: int) -> None:
 	label = myfont.render("Player " + str(turn) +" wins!", turn, c.PIECES_COLORS[turn])
 	interface.screen.blit(label, (350,15))
 
+
 def make_move(bd: Board, interface: any, board: np.ndarray, turn: int, myfont: any, move: int):
 	"""Make the move and see if the move is a winning move"""
 	game_over = False
@@ -87,6 +94,7 @@ def make_move(bd: Board, interface: any, board: np.ndarray, turn: int, myfont: a
 		bd.print_board()
 	return game_over
 
+
 def human_move(bd: Board, interface: any, board: np.ndarray, turn: int, myfont: any, event: any) -> bool:
 	"""Set the column of human move"""
 	col = hover_motion(interface, event)
@@ -96,7 +104,7 @@ def human_move(bd: Board, interface: any, board: np.ndarray, turn: int, myfont: 
 
 def ai_move(bd: Board, interface: any, game_mode: int, board: np.ndarray, turn: int, myfont: any) -> int:
 	"""Set the column of the AI move"""
-	ai_move = get_ai_move(bd, turn, game_mode)
+	ai_move = get_ai_move(board, turn, game_mode)
 	game_over = make_move(bd, interface, board, turn, myfont, ai_move)
 	return game_over
 	
