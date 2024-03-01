@@ -72,16 +72,12 @@ def show_winner(interface: any, myfont: any, turn: int) -> None:
 	label = myfont.render("Player " + str(turn) +" wins!", turn, c.PIECES_COLORS[turn])
 	interface.screen.blit(label, (350,15))
 
-
-def human_move(bd: Board, interface: any, board: np.ndarray, turn: int, myfont: any, event: any) -> bool:
-	"""Set the human move and see if this move won the game"""
+def make_move(bd: Board, interface: any, board: np.ndarray, turn: int, myfont: any, move: int):
 	game_over = False
-	col = hover_motion(interface, event)
-
-	if is_valid_location(col):
-		row = get_next_open_row(board, col)
-		drop_piece(board, row, col, turn)	# adds the new piece to the data matrix
-		interface.draw_new_piece(row+1, col+2, turn) 	# adds new piece to the screen
+	if is_valid_location(move):
+		row = get_next_open_row(board, move)
+		drop_piece(board, row, move, turn)	# adds the new piece to the data matrix
+		interface.draw_new_piece(row+1, move+2, turn) 	# adds new piece to the screen
 
 		if winning_move(board, turn):
 			show_winner(interface, myfont, turn)
@@ -90,22 +86,17 @@ def human_move(bd: Board, interface: any, board: np.ndarray, turn: int, myfont: 
 		bd.print_board()
 	return game_over
 
+def human_move(bd: Board, interface: any, board: np.ndarray, turn: int, myfont: any, event: any) -> bool:
+	"""Set the human move and see if this move won the game"""
+	col = hover_motion(interface, event)
+	game_over = make_move(bd, interface, board, turn, myfont, col)
+	return game_over
 
-def ai_move(bd: Board, interface: any, game_mode: int, board: np.ndarray, piece: int, myfont: any) -> int:
+
+def ai_move(bd: Board, interface: any, game_mode: int, board: np.ndarray, turn: int, myfont: any) -> int:
 	"""Set the ai move and see if this move won the game"""
-	game_over = False
-	ai_move = get_ai_move(bd, piece, game_mode)
-	
-	if is_valid_location(ai_move):
-		row = get_next_open_row(board, ai_move)
-		drop_piece(board, row, ai_move, piece)	# adds the new piece to the data matrix
-		interface.draw_new_piece(row+1, ai_move+2, piece) 	# adds new piece to the screen
-
-		if winning_move(board, piece):
-			show_winner(interface, myfont, piece)
-			game_over = True
-		pygame.display.update()
-		bd.print_board()
+	ai_move = get_ai_move(bd, turn, game_mode)
+	game_over = make_move(bd, interface, board, turn, myfont, ai_move)
 	return game_over
 	
 
