@@ -1,11 +1,12 @@
 import numpy as np
 import constants as c
+from dataclasses import dataclass
 
+@dataclass
 class Board:
-    def __init__(self) -> None:
-        self.rows = c.ROWS
-        self.columns = c.COLUMNS
-        self.board = np.zeros((self.rows, self.columns))
+    rows: int = c.ROWS
+    columns: int = c.COLUMNS
+    board: int = np.zeros((rows, columns))
             
     def get_board(self) -> np.ndarray:
         return self.board

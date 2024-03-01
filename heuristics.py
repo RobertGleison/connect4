@@ -25,17 +25,26 @@ def a_star(board: np.ndarray, piece: int) -> int:
 
 #@TODO: mudar int x e int y para uma tupla?
 def calculate_score(board: np.ndarray, row: int, column: int, piece: int) -> int:
-    scoreAI = 0
+    score_ai = 0
+    score_opponent = 0
     # Linha com 1 
-    scoreAI += 1 * get_ocurrences(board, 1, piece, row, column)
+    score_ai += 1 * get_ocurrences(board, 1, piece, row, column)
     # Linha com 2 
-    scoreAI += 4 * get_ocurrences(board, 2, piece, row, column)
+    score_ai += 4 * get_ocurrences(board, 2, piece, row, column)
     # Linha com 3 
-    scoreAI += 40 * get_ocurrences(board, 3, piece, row, column)
+    score_ai += 40 * get_ocurrences(board, 3, piece, row, column)
     # Linha com 4 
-    scoreAI += 100 * get_ocurrences(board, 4, piece, row, column)
+    score_ai += 100 * get_ocurrences(board, 4, piece, row, column)
+    #Linha com 1 (Inimigo)
+    score_opponent += 0 * get_ocurrences(board, 1, piece, row, column)
+    #Linha com 2 Inimigo)
+    score_opponent += 20 * get_ocurrences(board, 2, piece, row, column)
+    #Linha com 3 (Inimigo)
+    score_opponent += 1000 * get_ocurrences(board, 3, piece, row, column)
+    #Linha com 4 (Inimigo)
+    score_opponent += 1000 * get_ocurrences(board, 4, piece, row, column)
     
-    return scoreAI 
+    return score_ai - score_opponent 
 
 
 def get_ocurrences(board: np.ndarray, reference_quantity: int, turn: int, row: int, column: int) -> int:
