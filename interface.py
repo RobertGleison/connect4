@@ -1,4 +1,4 @@
-import pygame
+import pygame 
 import itertools
 import sys
 import constants as c
@@ -123,15 +123,12 @@ class Interface:
     def play_game(self, bd: Board, game_mode: int) -> None:
         board = bd.get_board()	# pieces matrix
         game_over = False
-
+        myfont = pygame.font.SysFont("Monospace", 50, bold=True)
         turns = itertools.cycle([1, 2])  # iteration between turns (player 1 and player 2)
         turn = next(turns)
-
-        myfont = pygame.font.SysFont("Monospace", 50, bold=True)
         
         while not game_over:
             for event in pygame.event.get():
-
                 if event.type == pygame.QUIT:
                     sys.exit()
 
@@ -142,26 +139,18 @@ class Interface:
                 pygame.display.update()
 
                 if event.type == pygame.MOUSEBUTTONDOWN:	
-                    if game_mode == 1:
+                    if turn == 1 or (turn == 2 and game_mode == 1):
                         game_over = game.handle_human_move(bd, self, board, turn, myfont, event)
+                        turn = next(turns)
+                        if game_over:
+                            break
+                        continue
 
-                    elif game_mode == 2:
-                        if turn == 1:
-                            game_over = game.handle_human_move(bd, self, board, turn, myfont, event)
-                        game_over = game.handle_ia_move(2, board, turn)
-                        
-                    elif game_mode == 3:
-                        if turn == 1:
-                            game_over = game.handle_human_move(bd, self, board, turn, myfont, event)
-                        game_over = game.handle_ia_move(3, board, turn)
-
-                    elif game_mode == 4:
-                        if turn == 1:
-                            game_over = game.handle_human_move(bd, self, board, turn, myfont, event)
-                        game_over = game.handle_ia_move(4, board, turn)    
-
+                if turn != 1 and game_mode != 1: 
+                    game_over = game.handle_ia_move(bd, self, game_mode, board, turn, myfont)
+                    pygame.time.wait(1)                    
                     turn = next(turns)
-        pygame.time.wait(3500)
+        pygame.time.wait(2000)
 
 
     def draw_board(self) -> None:
