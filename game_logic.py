@@ -9,24 +9,30 @@ import logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
-def drop_piece(board: np.ndarray, row: int, col: int, piece: int):
+def drop_piece(board: np.ndarray, row: int, col: int, piece: int) -> None:
 	"""Insert a piece into board on correct location"""
 	board[row][col] = piece
 
 
-def is_valid_location(col: int):
+def is_valid_column(col: int) -> bool:
 	"""Analize if chose column is valid"""
 	return col >= 0 and col < c.COLUMNS
 
 
-def get_next_open_row(board: np.ndarray, col: int):
+def is_valid_row(board: np.ndarray, col: int) -> bool:
+	"""Analize if chose row is valid"""
+	row = get_next_open_row(board, col)
+	return 0 <= row <= 5
+
+
+def get_next_open_row(board: np.ndarray, col: int) -> int:
 	"""Given a column, return the first row avaiable to set a piece"""
 	for row in range(c.ROWS):
 		if board[row][col] == 0:
 			return row
-		
+	return -1
 
-def winning_move(board: np.ndarray, piece: int):
+def winning_move(board: np.ndarray, piece: int) -> bool:
 	"""Return if the selected move will win the game"""
 	return check_vertical(board, piece) or check_horizontal(board, piece) or check_ascending_diagonal(board, piece) or check_descending_diagonal(board, piece)
 
@@ -79,7 +85,7 @@ def show_winner(interface: any, myfont: any, turn: int) -> None:
 def make_move(bd: Board, interface: any, board: np.ndarray, turn: int, myfont: any, move: int):
 	"""Make the move and see if the move is a winning move"""
 	game_over = False
-	if is_valid_location(move):
+	if is_valid_column(move) and is_valid_row(board, move):
 		row = get_next_open_row(board, move)
 		drop_piece(board, row, move, turn)	# adds the new piece to the data matrix
 		interface.draw_new_piece(row+1, move+2, turn) 	# adds new piece to the screen
