@@ -61,8 +61,9 @@ class Interface:
                         continue
 
                 if turn != 1 and game_mode != 1: 
-                    game_over = game.ai_move(bd, self, game_mode, board, turn, myfont)
-                    pygame.time.wait(1)                    
+                    game_over = game.ai_move(bd, self, game_mode, board, turn, next(turns), myfont)
+                    pygame.time.wait(1)        
+                    next(turns)            
                     turn = next(turns)
         pygame.time.wait(2000)
 

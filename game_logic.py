@@ -21,11 +21,8 @@ def is_valid_location(col: int):
 
 def get_next_open_row(board: np.ndarray, col: int):
 	"""Given a column, return the first row avaiable to set a piece"""
-	logging.info("Enter drop_piece")
-
 	for row in range(c.ROWS):
 		if board[row][col] == 0:
-			logging.info("Leaving drop_piece")
 			return row
 		
 
@@ -102,22 +99,22 @@ def human_move(bd: Board, interface: any, board: np.ndarray, turn: int, myfont: 
 	return game_over
 
 
-def ai_move(bd: Board, interface: any, game_mode: int, board: np.ndarray, turn: int, myfont: any) -> int:
+def ai_move(bd: Board, interface: any, game_mode: int, board: np.ndarray, turn: int, opponent_turn: int, myfont: any) -> int:
 	"""Set the column of the AI move"""
-	ai_move = get_ai_move(board, turn, game_mode)
+	ai_move = get_ai_move(board, turn, opponent_turn, game_mode)
 	game_over = make_move(bd, interface, board, turn, myfont, ai_move)
 	return game_over
 	
 
-def get_ai_move(board, piece, game_mode) -> int:
+def get_ai_move(board: Board, ai_piece: int, opponent_piece: int, game_mode: int) -> int:
 	"""Select the chose ai algorithm to make a move"""
 	chose_column = 0
 	if game_mode == 2:
-		chose_column = h.a_star(board, piece)
+		chose_column = h.a_star(board, ai_piece, opponent_piece)
 	elif game_mode == 3:
-		chose_column = h.monte_carlo_tree_search(board, piece)
+		chose_column = h.monte_carlo_tree_search(board, ai_piece)
 	elif game_mode == 4:
-		chose_column = h.alphabeta(board, piece)
+		chose_column = h.alphabeta(board, ai_piece)
 	return chose_column
 
 
