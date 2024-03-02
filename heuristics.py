@@ -11,7 +11,7 @@ def a_star(board: np.ndarray, ai_piece: int, opponent_piece: int) -> int:
     best_move = -1
     for col in range(c.COLUMNS):
         if not game.is_valid(board, col): continue
-        temp_score = 0
+        # temp_score = 0
         row = game.get_next_open_row(board, col)
         temp_score = calculate_score(board, row, col, ai_piece, opponent_piece)
         if temp_score > move_score:
@@ -64,11 +64,6 @@ def calculate_score(board: np.ndarray, row: int, column: int, ai_piece: int, opp
 
     logging.info(f"Total: {score_ai - score_opponent}\n")
 
-    #Isso aqui é uma gambiarra que eu fiz pra tentar evitar que a IA escolha uma coluna já cheia, aí teoricamente ela escolheria uma outra coluna, mas nem funcionou-.
-    #Criei uma nova validação tbm chamada is_valid_row, dentro de game_logic para evitar que caso seja escolhido uma coluna já cheia, o jogo crashe. Agora o jogo não
-    #dá erro, mas a IA ainda continua as vezes escolhendo soltar a peça numa coluna cheia, e isso simplesmente pula a vez dela e fica só eu jogando
-    if row > 5:
-        score_opponent += 10000
     return score_ai - score_opponent 
 
 
@@ -111,7 +106,7 @@ def get_ocurrences(board: np.ndarray, reference_quantity: int, piece: int, row: 
     for col in range(c.COLUMNS - 3):
         temp = 0
         for row in range(3, c.ROWS):
-            sliding_window = [board[row- i][col + i] for i in range(4)]
+            sliding_window = [board[row - i][col + i] for i in range(4)]
             for board_piece in sliding_window:
                 if board_piece == piece:
                     temp += 1
@@ -119,9 +114,27 @@ def get_ocurrences(board: np.ndarray, reference_quantity: int, piece: int, row: 
             occurrences += 1
     return occurrences
 
-        
+# para implementar ainda
+def a_star_melhorado(board: np.ndarray, ai_piece: int, opponent_piece: int) -> int:
+    move_score = -2000
+    best_move = -1
+    for col in range(c.COLUMNS):
+        # fazer copia do tabuleiro original aqui 
+        if not game.is_valid(board, col): continue
+        temp_score = 0
+        row = game.get_next_open_row(board, col)
+        # add peça no novo tabuleiro falso para cada coluna
+        # chamar a_star para o oponente e retornar aqui apenas com o tabuleiro que contenha a melhor peça jogada dele 
+        temp_score = calculate_score(board, row, col, ai_piece, opponent_piece)
+        if temp_score > move_score:
+            best_move = col
+            move_score = temp_score
+    return best_move
+
+
 def alphabeta(board: np.ndarray, piece: int) -> int:
     return 0
+
 
 def monte_carlo_tree_search(board: np.ndarray, piece: int) -> int:
     best_column = 0
