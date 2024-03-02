@@ -6,17 +6,11 @@ import logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
-def alphabeta(board: np.ndarray, piece: int) -> int:
-    return 0
-
-def monte_carlo_tree_search(board: np.ndarray, piece: int) -> int:
-    best_column = 0
-    return best_column
-
 def a_star(board: np.ndarray, ai_piece: int, opponent_piece: int) -> int:
     move_score = -2000
     best_move = -1
     for col in range(c.COLUMNS):
+        temp_score = 0
         row = game.get_next_open_row(board, col)
         temp_score = calculate_score(board, row, col, ai_piece, opponent_piece)
         if temp_score > move_score:
@@ -24,7 +18,7 @@ def a_star(board: np.ndarray, ai_piece: int, opponent_piece: int) -> int:
             move_score = temp_score
     return best_move
 
-
+#Coloquei logs para printas na tela as informações em tempo real para analsar, depois que estiver pronto, todas essa variaveis e logs podem sumir
 def calculate_score(board: np.ndarray, row: int, column: int, ai_piece: int, opponent_piece: int) -> int:
     logging.info("Calculate Score")
     
@@ -63,9 +57,15 @@ def calculate_score(board: np.ndarray, row: int, column: int, ai_piece: int, opp
     #Linha com 4 (Inimigo)
     score_opponent4 += 1000 * get_ocurrences(board, 4, opponent_piece, row, column)
     logging.info(f"3 ocorrencia oponente: {score_opponent3}")
+
     score_ai = score_ai1 + score_ai2 + score_ai3
     score_opponent = score_opponent1 + score_opponent2 + score_opponent3
+
     logging.info(f"Total: {score_ai - score_opponent}\n")
+
+    #Isso aqui é uma gambiarra que eu fiz pra tentar evitar que a IA escolha uma coluna já cheia, aí teoricamente ela escolheria uma outra coluna, mas nem funcionou-.
+    #Criei uma nova validação tbm chamada is_valid_row, dentro de game_logic para evitar que caso seja escolhido uma coluna já cheia, o jogo crashe. Agora o jogo não
+    #dá erro, mas a IA ainda continua as vezes escolhendo soltar a peça numa coluna cheia, e isso simplesmente pula a vez dela e fica só eu jogando
     if row > 5:
         score_opponent + 10000
     return score_ai - score_opponent 
@@ -112,12 +112,16 @@ def get_ocurrences(board: np.ndarray, reference_quantity: int, piece: int, row: 
         for row in range(3, c.ROWS):
             sliding_window = [board[row- i][col + i] for i in range(4)]
             for board_piece in sliding_window:
-                print(board[row][column])
                 if board_piece == piece:
                     temp += 1
         if temp == reference_quantity:
             occurrences += 1
-
     return occurrences
 
         
+def alphabeta(board: np.ndarray, piece: int) -> int:
+    return 0
+
+def monte_carlo_tree_search(board: np.ndarray, piece: int) -> int:
+    best_column = 0
+    return best_column
