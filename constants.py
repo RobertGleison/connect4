@@ -7,6 +7,8 @@ IA_COLOR = (248,216,87) #Yellow
 BUTTON_TEXT_COLOR = (0,0,0) # Black
 
 PIECES_COLORS = [BACKGROUND_COLOR, PLAYER_COLOR, IA_COLOR]
+HUMAN_PIECE = 1
+AI_PIECE = 2
 
 # Constants for the data matrix
 ROWS = 6

@@ -10,6 +10,7 @@ def a_star(board: np.ndarray, ai_piece: int, opponent_piece: int) -> int:
     move_score = -2000
     best_move = -1
     for col in range(c.COLUMNS):
+        if not game.is_valid(board, col): continue
         temp_score = 0
         row = game.get_next_open_row(board, col)
         temp_score = calculate_score(board, row, col, ai_piece, opponent_piece)
@@ -67,7 +68,7 @@ def calculate_score(board: np.ndarray, row: int, column: int, ai_piece: int, opp
     #Criei uma nova validação tbm chamada is_valid_row, dentro de game_logic para evitar que caso seja escolhido uma coluna já cheia, o jogo crashe. Agora o jogo não
     #dá erro, mas a IA ainda continua as vezes escolhendo soltar a peça numa coluna cheia, e isso simplesmente pula a vez dela e fica só eu jogando
     if row > 5:
-        score_opponent + 10000
+        score_opponent += 10000
     return score_ai - score_opponent 
 
 
