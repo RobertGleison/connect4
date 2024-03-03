@@ -3,7 +3,7 @@ import constants as c
 import game_logic as game
 import logging
 
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.DEBUG, format='%(message)s')
 
 
 def a_star(board: np.ndarray, ai_piece: int, opponent_piece: int) -> int:
@@ -21,99 +21,114 @@ def a_star(board: np.ndarray, ai_piece: int, opponent_piece: int) -> int:
             move_score = temp_score
     return best_move
 
-#Coloquei logs para printas na tela as informações em tempo real para analsar, depois que estiver pronto, todas essa variaveis e logs podem sumir
+
 def calculate_score(board: np.ndarray, row: int, column: int, ai_piece: int, opponent_piece: int) -> int:
-    logging.info("Calculate Score")
-    
     score_ai =  0
-    score_ai1 = 0
-    score_ai2 = 0
-    score_ai3 = 0
-    score_ai4 = 0
     score_opponent = 0
-    score_opponent1 = 0
-    score_opponent2 = 0
-    score_opponent3 = 0
-    score_opponent4 = 0
 
-    # Linha com 1 
-    score_ai1 += 1 * get_ocurrences(board, 1, ai_piece, row, column)
-    logging.info(f"1 ocorrencia ai: {score_ai1}")
-    # Linha com 2 
-    score_ai2 += 10 * get_ocurrences(board, 2, ai_piece, row, column)
-    logging.info(f"2 ocorrencia ai: {score_ai2}")
-    # Linha com 3 
-    score_ai3 += 50 * get_ocurrences(board, 3, ai_piece, row, column)
-    logging.info(f"3 ocorrencia ai: {score_ai3}")
-    # Linha com 4
-    score_ai4 += 1000 * get_ocurrences(board, 4, ai_piece, row, column)
-    logging.info(f"4 ocorrencia ai: {score_ai4}")
-    #Linha com 1 (Inimigo)
-    score_opponent1 += 1 * get_ocurrences(board, 1, opponent_piece, row, column)
-    logging.info(f"1 ocorrencia oponente: {score_opponent1}")
-    #Linha com 2 Inimigo)
-    score_opponent2 += 10 * get_ocurrences(board, 2, opponent_piece, row, column)
-    logging.info(f"2 ocorrencia oponente: {score_opponent2}")
-    #Linha com 3 (Inimigo)
-    score_opponent3 += 50 * get_ocurrences(board, 3, opponent_piece, row, column)
-    logging.info(f"3 ocorrencia oponente: {score_opponent3}")
-    #Linha com 4 (Inimigo)
-    score_opponent4 += 1000 * get_ocurrences(board, 4, opponent_piece, row, column)
-    logging.info(f"4 ocorrencia oponente: {score_opponent4}")
+    score_ai += 1 * get_ocurrences(board, 1, ai_piece, row, column)
+    score_ai += 10 * get_ocurrences(board, 2, ai_piece, row, column)
+    score_ai += 50 * get_ocurrences(board, 3, ai_piece, row, column)
+    score_ai += 1000 * get_ocurrences(board, 4, ai_piece, row, column)
 
-    score_ai = score_ai1 + score_ai2 + score_ai3
-    score_opponent = score_opponent1 + score_opponent2 + score_opponent3
+    score_opponent += 1 * get_ocurrences(board, 1, opponent_piece, row, column)
+    score_opponent += 10 * get_ocurrences(board, 2, opponent_piece, row, column)
+    score_opponent += 50 * get_ocurrences(board, 3, opponent_piece, row, column)
+    score_opponent += 1000 * get_ocurrences(board, 4, opponent_piece, row, column)
 
-    logging.info(f"Total: {score_ai - score_opponent}\n")
+    return score_ai - score_opponent  
 
-    return score_ai - score_opponent 
+    # Não apagar esse código comentado, será util para testes
+    # logging.info("Calculate Score")
+    # score_ai =  0
+    # score_ai1 = 0
+    # score_ai2 = 0
+    # score_ai3 = 0
+    # score_ai4 = 0
+    # score_opponent = 0
+    # score_opponent1 = 0
+    # score_opponent2 = 0
+    # score_opponent3 = 0
+    # score_opponent4 = 0
+
+    # score_ai1 += 1 * get_ocurrences(board, 1, ai_piece, row, column)
+    # logging.info(f"Total score from 1 yellow ocurrences (1 point each): {score_ai1}")
+
+    # score_ai2 += 10 * get_ocurrences(board, 2, ai_piece, row, column)
+    # logging.info(f"Total score from 2 yellow ocurrences (10 point each): {score_ai2}")
+
+    # score_ai3 += 50 * get_ocurrences(board, 3, ai_piece, row, column)
+    # logging.info(f"Total score from 3 yellow ocurrences (50 point each): {score_ai3}")
+
+    # score_ai4 += 1000 * get_ocurrences(board, 4, ai_piece, row, column)
+    # logging.info(f"Total score from 3 yellow ocurrences (1000 point each): {score_ai4}")
+
+    # score_opponent1 += 1 * get_ocurrences(board, 1, opponent_piece, row, column)
+    # logging.info(f"Total score from 1 red ocurrences (1 point each): {score_opponent1}")
+
+    # score_opponent2 += 10 * get_ocurrences(board, 2, opponent_piece, row, column)
+    # logging.info(f"Total score from 2 red ocurrences (10 point each): {score_opponent2}")
+
+    # score_opponent3 += 50 * get_ocurrences(board, 3, opponent_piece, row, column)
+    # logging.info(f"Total score from 3 red ocurrences (50 point each): {score_opponent3}")
+
+    # score_opponent4 += 1000 * get_ocurrences(board, 4, opponent_piece, row, column)
+    # logging.info(f"Total score from 4 red ocurrences (1000 point each): {score_opponent4}")
+
+    # score_ai = score_ai1 + score_ai2 + score_ai3 + score_ai4
+    # score_opponent = score_opponent1 + score_opponent2 + score_opponent3 + score_opponent4
+
+    # logging.info(f"Total: {score_ai - score_opponent}")
+    # logging.info(f"Coluna: {column}\n")
+
+    # return score_ai - score_opponent 
 
 
 def get_ocurrences(board: np.ndarray, reference_quantity: int, piece: int, row: int, column: int) -> int:
     occurrences = 0
     # Check horizontal
     for col in range(c.COLUMNS - 3):
-        temp = 0
         for r in range(c.ROWS):
+            temp = 0
             sliding_window = [board[r][col + i] for i in range(4)]
             for board_piece in sliding_window:
                 if board_piece == piece:
                     temp += 1
-        if temp == reference_quantity:
-            occurrences += 1
+            if temp == reference_quantity:
+                occurrences += 1
 
     # Check vertical
     for col in range(c.COLUMNS):
-        temp = 0
         for r in range(c.ROWS - 3):
+            temp = 0
             sliding_window = [board[r + i][col] for i in range(4)]
             for board_piece in sliding_window:
                 if board_piece == piece:
                     temp += 1
-        if temp == reference_quantity:
-            occurrences += 1
+            if temp == reference_quantity:
+                occurrences += 1
 
     # Check ascending diagonal
     for col in range(c.COLUMNS - 3):
-        temp = 0
         for r in range(c.ROWS - 3):
+            temp = 0
             sliding_window = [board[r + i][col + i] for i in range(4)]
             for board_piece in sliding_window:
                 if board_piece == piece:
                     temp += 1
-        if temp == reference_quantity:
-            occurrences += 1
+            if temp == reference_quantity:
+                occurrences += 1
 
     # Check descending diagonal
     for col in range(c.COLUMNS - 3):
-        temp = 0
         for row in range(3, c.ROWS):
+            temp = 0
             sliding_window = [board[row - i][col + i] for i in range(4)]
             for board_piece in sliding_window:
                 if board_piece == piece:
                     temp += 1
-        if temp == reference_quantity:
-            occurrences += 1
+            if temp == reference_quantity:
+                occurrences += 1
     return occurrences
 
 # para implementar ainda
