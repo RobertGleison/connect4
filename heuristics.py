@@ -116,13 +116,13 @@ def get_ocurrences(board: np.ndarray, reference_quantity: int, piece: int, row: 
 
 # para implementar ainda
 def a_star_melhorado(board: np.ndarray, ai_piece: int, opponent_piece: int) -> int:
-    move_score = -2000
+    move_score = -10000
     best_move = -1
     for col in range(c.COLUMNS):
-        # fazer copia do tabuleiro original aqui 
         if not game.is_valid(board, col): continue
+        board_copy = board.copy()
         temp_score = 0
-        row = game.get_next_open_row(board, col)
+        row = game.get_next_open_row(board_copy, col)
         # add peça no novo tabuleiro falso para cada coluna
         # chamar a_star para o oponente e retornar aqui apenas com o tabuleiro que contenha a melhor peça jogada dele 
         temp_score = calculate_score(board, row, col, ai_piece, opponent_piece)
