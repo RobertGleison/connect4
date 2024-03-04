@@ -40,7 +40,7 @@ def get_ai_column(board: Board, game_mode: int) -> int:
 	elif game_mode == 3:
 		chosen_column = h.monte_carlo_tree_search(board, c.AI_PIECE)
 	elif game_mode == 4:
-		chosen_column = h.alphabeta(board, c.AI_PIECE)
+		chosen_column = h.a_star_adversarial(board, c.AI_PIECE, c.HUMAN_PIECE)
 	return chosen_column
 
 

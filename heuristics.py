@@ -17,7 +17,7 @@ def a_star(board: np.ndarray, ai_piece: int, opponent_piece: int) -> int:
         cur_score = 0
         board_copy = board.copy()
         row = game.get_next_open_row(board_copy, col)
-        game.drop_piece(board_copy, row, col, 2)
+        game.drop_piece(board_copy, row, col, ai_piece)
 
         if debug: 
             print(np.flip(board_copy, 0))
@@ -166,7 +166,6 @@ def curr_score(board: np.ndarray, piece: int, opponent_piece: int) -> int:
             sliding_window = [board[r - i][col + i] for i in range(4)]
             score += count_cur(sliding_window, piece, opponent_piece)
 
-    print(score)
     return score
 
 
@@ -179,27 +178,33 @@ def count_cur(sliding_window: list, piece: int, opponent_piece: int) -> int:
     if sliding_window.count(opponent_piece) == 1: return -1
     if sliding_window.count(opponent_piece) == 2: return -10
     if sliding_window.count(opponent_piece) == 3: return -50
-    if sliding_window.count(opponent_piece) == 4: return -1000
+    if sliding_window.count(opponent_piece) == 4: return -2000
     return 0
 
-# para implementar ainda
-# def a_star_adversarial(board: np.ndarray, ai_piece: int, opponent_piece: int) -> int:
-#     move_score = -2000
-#     best_move = -1
-#     for col in range(c.COLUMNS):
-#         if not game.is_valid(board, col): continue
-#         board_copy = board.copy()
-#         cur_score = 0
-#         row = game.get_next_open_row(board_copy, col)
-#         game.drop_piece(board_copy, row, col, 2)
-#         opponent_col = a_star(board_copy, opponent_piece, ai_piece)
-#         row = game.get_next_open_row(board_copy, opponent_col)
-#         game.drop_piece(board_copy, opponent_row, opponent_col, 1) # chamar a_star para o oponente e retornar aqui apenas com o tabuleiro que contenha a melhor peça jogada dele 
-#         cur_score = curr_score(board_copy, ai_piece, opponent_piece)
-#         if cur_score > move_score:
-#             best_move = col
-#             move_score = cur_score
-#     return best_move
+
+def a_star_adversarial(board: np.ndarray, ai_piece: int, opponent_piece: int) -> int:
+    move_score = -2000
+    best_move = -1
+    best_opponent = 0;
+    for col in range(c.COLUMNS):
+        if not game.is_valid(board, col): continue
+        board_copy = board.copy()
+        cur_score = 0
+        row = game.get_next_open_row(board_copy, col)
+        game.drop_piece(board_copy, row, col, ai_piece)
+
+        # supor a melhor jogada do oponente na próxima jogada
+        opponent_col = a_star(board_copy, opponent_piece, ai_piece)  # melhor jogada do oponente se a IA jogar na posição atual
+        opponent_row = game.get_next_open_row(board_copy, opponent_col)
+        game.drop_piece(board_copy, opponent_row, opponent_col, 1) # chamar a_star para o oponente e retornar aqui apenas com o tabuleiro que contenha a melhor peça jogada dele 
+        cur_score = curr_score(board_copy, ai_piece, opponent_piece)
+        if cur_score > move_score:
+            best_opponent = opponent_col + 1
+            best_move = col
+            move_score = cur_score
+        
+    print("Solução: coluna " + str(best_opponent))
+    return best_move
 
 
 def alphabeta(board: np.ndarray, piece: int) -> int:

@@ -113,7 +113,7 @@ class Interface:
         self.screen.fill(c.BACKGROUND_COLOR)
         self.draw_button(self.height/2, 250, 300, 50, "A*")
         self.draw_button(self.height/2, 350, 300, 50, "MCTS")
-        self.draw_button(self.height/2, 450, 300, 50, "Alpha Beta")
+        self.draw_button(self.height/2, 450, 300, 50, "A* Adversarial")
 
 
     def choose_ai_option(self) -> int:
