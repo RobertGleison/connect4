@@ -169,6 +169,7 @@ def curr_score(board: np.ndarray, piece: int, opponent_piece: int) -> int:
     return score
 
 
+# COMENTARIO PARA NOTEBOOK: scanear o quadro inteiro só uma vez
 def count_cur(sliding_window: list, piece: int, opponent_piece: int) -> int:
     if piece in sliding_window and opponent_piece in sliding_window: return 0
     if sliding_window.count(piece) == 1: return 1
