@@ -69,7 +69,7 @@ class Interface:
 
 
         self.show_winner(myfont, turn)
-        pygame.time.wait(2000)
+        pygame.time.wait(12000)
 
 
     def draw_options_board(self):
