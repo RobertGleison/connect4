@@ -69,7 +69,7 @@ class Interface:
 
 
         self.show_winner(myfont, turn)
-        pygame.time.wait(12000)
+        pygame.time.wait(3000)
 
 
     def draw_options_board(self):
@@ -111,9 +111,9 @@ class Interface:
 
     def draw_algorithms(self):
         self.screen.fill(c.BACKGROUND_COLOR)
-        self.draw_button(self.height/2, 250, 300, 50, "A*")
-        self.draw_button(self.height/2, 350, 300, 50, "MCTS")
-        self.draw_button(self.height/2, 450, 300, 50, "A* Adversarial")
+        self.draw_button(self.height/2, 250, 300, 50, "Greedy")
+        self.draw_button(self.height/2, 350, 300, 50, "Predictive Greedy")
+        self.draw_button(self.height/2, 450, 300, 50, "MCTS")
 
 
     def choose_ai_option(self) -> int:
@@ -125,13 +125,13 @@ class Interface:
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     mouse_x, mouse_y = pygame.mouse.get_pos()
                     if (self.width / 2 - 150) <= mouse_x <= (self.width / 2 + 150) and 250 <= mouse_y <= 300:
-                        print("A*")
+                        print("Greedy")
                         game_mode = 2
                     elif (self.width / 2 - 150) <= mouse_x <= (self.width / 2 + 150) and 350 <= mouse_y <= 400:
-                        print("MCTS")
+                        print("Predictive Greedy")
                         game_mode = 3
                     elif (self.width / 2 - 150) <= mouse_x <= (self.width / 2 + 150) and 450 <= mouse_y <= 500:
-                        print("Alpha Beta")
+                        print("MCTS")
                         game_mode = 4
 
                 pygame.display.flip()

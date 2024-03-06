@@ -88,30 +88,54 @@ def get_ocurrences(board: np.ndarray, reference_quantity: int, piece: int, oppon
     # Check horizontal
     for col in range(c.COLUMNS - 3):
         for r in range(c.ROWS):
+            # temp = 0
             sliding_window = [board[r][col + i] for i in range(4)]
             if piece in sliding_window and opponent_piece in sliding_window: continue
             if sliding_window.count(piece) == reference_quantity: occurrences += 1
-          
+            # for board_piece in sliding_window:
+            #     if board_piece == piece:
+            #         temp += 1
+            # if temp == reference_quantity:
+            #     occurrences += 1
+
     # Check vertical
     for col in range(c.COLUMNS):
         for r in range(c.ROWS - 3):
+            # temp = 0
             sliding_window = [board[r + i][col] for i in range(4)]
             if piece in sliding_window and opponent_piece in sliding_window: continue
             if sliding_window.count(piece) == reference_quantity: occurrences += 1
+            # for board_piece in sliding_window:
+            #     if board_piece == piece:
+            #         temp += 1
+            # if temp == reference_quantity:
+            #     occurrences += 1
 
     # Check ascending diagonal
     for col in range(c.COLUMNS - 3):
         for r in range(c.ROWS - 3):
+            # temp = 0
             sliding_window = [board[r + i][col + i] for i in range(4)]
             if piece in sliding_window and opponent_piece in sliding_window: continue
             if sliding_window.count(piece) == reference_quantity: occurrences += 1
+            # for board_piece in sliding_window:
+            #     if board_piece == piece:
+            #         temp += 1
+            # if temp == reference_quantity:
+            #     occurrences += 1
 
     # Check descending diagonal
     for col in range(c.COLUMNS - 3):
         for r in range(3, c.ROWS):
+            # temp = 0
             sliding_window = [board[r - i][col + i] for i in range(4)]
             if piece in sliding_window and opponent_piece in sliding_window: continue
             if sliding_window.count(piece) == reference_quantity: occurrences += 1
+            # for board_piece in sliding_window:
+            #     if board_piece == piece:
+            #         temp += 1
+            # if temp == reference_quantity:
+            #     occurrences += 1
     return occurrences
 
 

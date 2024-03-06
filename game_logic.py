@@ -5,6 +5,8 @@ import pygame
 import heuristics as h
 from board import Board
 import logging
+import greedy as g
+import mcts
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -36,11 +38,11 @@ def get_ai_column(board: Board, game_mode: int) -> int:
 	"""Select the chose ai algorithm to make a move"""
 	chosen_column = 0
 	if game_mode == 2:
-		chosen_column = h.a_star(board, c.AI_PIECE, c.HUMAN_PIECE)
+		chosen_column = g.greedy(board, c.AI_PIECE, c.HUMAN_PIECE)
 	elif game_mode == 3:
-		chosen_column = h.monte_carlo_tree_search(board, c.AI_PIECE)
+		chosen_column = g.predictive_greedy(board, c.AI_PIECE, c.HUMAN_PIECE)
 	elif game_mode == 4:
-		chosen_column = h.a_star_adversarial(board, c.AI_PIECE, c.HUMAN_PIECE)
+		chosen_column = mcts.play(board, c.AI_PIECE)
 	return chosen_column
 
 
