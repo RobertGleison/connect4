@@ -95,7 +95,7 @@ class Interface:
                         print("Player vs Player selected")
                         game_mode = 1
                     elif (self.width/2 - 150) <= mouse_x <= (self.width/2 + 150) and 450 <= mouse_y <= 500:
-                        print("Player vs IA selected")
+                        print("Player vs AI selected")
                         self.draw_algorithms()
                         game_mode = 2
 
