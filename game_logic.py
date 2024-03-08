@@ -6,7 +6,7 @@ import heuristics as h
 from board import Board
 import logging
 import greedy as g
-import mcts
+import alpha_beta as a
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -42,9 +42,14 @@ def get_ai_column(board: Board, game_mode: int) -> int:
 	elif game_mode == 3:
 		chosen_column = g.predictive_greedy(board, c.AI_PIECE, c.HUMAN_PIECE)
 	elif game_mode == 4:
-		chosen_column = mcts.play(board, c.AI_PIECE)
+		chosen_column = a.alpha_beta(board, c.AI_PIECE, c.HUMAN_PIECE)
 	return chosen_column
 
+def simulate_move(board: np.ndarray, piece: int, col: int) -> np.ndarray:
+    board_copy = board.copy()
+    row = get_next_open_row(board_copy, col)
+    drop_piece(board_copy, row, col, piece)
+    return board_copy
 
 def make_move(bd: Board, interface: any, board: np.ndarray, turn: int, move: int):
 	"""Make the move and see if the move is a winning one"""
