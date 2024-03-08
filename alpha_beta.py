@@ -12,7 +12,11 @@ def alpha_beta(board):
     for i in (range(len(children))):
         if(h.calculate_board_score(children[i],c.HUMAN_PIECE, c.AI_PIECE) == 512):
             return children[i]
-        call = max_value(board, depth, float('-inf'), float('+inf'), depth, c.HUMAN_PIECE)
+        score = max_value(board, depth, float('-inf'), float('+inf'), depth, c.HUMAN_PIECE)
+        if score > current_value:
+            current_value = score
+            best_move = i
+    return best_move
 
 
 def max_value(board, depth, alpha, beta, depth_limit: int, piece: int):
