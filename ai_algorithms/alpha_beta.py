@@ -9,7 +9,7 @@ logging.basicConfig(level=logging.DEBUG, format='%(message)s')
 def alpha_beta(board):
     best_score = float('-inf')
     best_move = -1
-    depth_limit = 3
+    depth_limit = 5
     children = get_children(board, c.AI_PIECE)
     for col in range(c.COLUMNS):
         child_board = children[col]
