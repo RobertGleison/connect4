@@ -35,7 +35,6 @@ def max_value(board, depth, alpha, beta, depth_limit: int, piece: int):
         alpha = max(alpha, score)
         if beta <= alpha: break
     logging.info(f"Score: {score}")
-    print("teste branch")
     return score
 
 
