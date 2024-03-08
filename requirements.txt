@@ -1,5 +1,4 @@
 #To install the dependencies of this project: pip install -r requirements.txt
 
-pip
 pygame
 numpy
