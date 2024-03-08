@@ -42,7 +42,7 @@ def get_ai_column(board: Board, game_mode: int) -> int:
 	elif game_mode == 3:
 		chosen_column = g.predictive_greedy(board, c.AI_PIECE, c.HUMAN_PIECE)
 	elif game_mode == 4:
-		chosen_column = a.alpha_beta(board, c.AI_PIECE, c.HUMAN_PIECE)
+		chosen_column = a.alpha_beta(board)
 	return chosen_column
 
 def simulate_move(board: np.ndarray, piece: int, col: int) -> np.ndarray:
