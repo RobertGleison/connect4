@@ -1,13 +1,10 @@
-import constants as c
+import game.constants as c
 import numpy as np
 import math
 import pygame
-import heuristics as h
-from board import Board
+from game.board import Board
 import logging
-import greedy as g
-import alpha_beta as a
-
+from ai_algorithms import greedy as g, alpha_beta as a
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 

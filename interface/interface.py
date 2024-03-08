@@ -1,9 +1,9 @@
 import pygame 
 import itertools
 import sys
-import constants as c
-from board import Board
-import game_logic as game
+from game import constants as c
+from game.board import Board
+import game.game_logic as game
 from dataclasses import dataclass
 import logging
 

@@ -1,5 +1,5 @@
 import numpy as np
-import constants as c
+from game import constants as c
 from dataclasses import dataclass
 
 @dataclass

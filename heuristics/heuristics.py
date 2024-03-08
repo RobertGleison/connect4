@@ -1,5 +1,5 @@
 
-import constants as c
+from game import constants as c
 import numpy as np
 
 def calculate_board_score(board: np.ndarray, piece: int, opponent_piece: int) -> int:
