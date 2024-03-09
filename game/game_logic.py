@@ -57,7 +57,7 @@ def make_move(bd: Board, interface: any, board: np.ndarray, turn: int, move: int
 	pygame.display.update()
 	bd.print_board()
 
-	return winning_move(board, turn)
+	return winning_move(board, turn) or is_game_tied(board)
 
 
 def get_next_open_row(board: np.ndarray, col: int) -> int:
@@ -71,6 +71,13 @@ def get_next_open_row(board: np.ndarray, col: int) -> int:
 def drop_piece(board: np.ndarray, row: int, col: int, piece: int) -> None:
 	"""Insert a piece into board on correct location"""
 	board[row][col] = piece
+
+
+def is_game_tied(board: np.ndarray) -> bool:
+	for i in range(len(board)):
+		for j in range(len(board[0])):
+			if board[i][j]==0: return False
+	return True
 
 
 def is_valid(board: np.ndarray, col: int) -> bool:

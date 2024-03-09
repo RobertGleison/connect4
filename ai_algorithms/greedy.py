@@ -37,7 +37,8 @@ def predictive_greedy(board: np.ndarray, ai_piece: int, opponent_piece: int) -> 
             best_opponent = opponent_col + 1
             best_move = col
             move_score = cur_score
-        
+
+    logging.info(f"Score = {move_score}")    
     print("Próximo passo sugerido: coluna " + str(best_opponent))
     return best_move
 
