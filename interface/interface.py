@@ -43,6 +43,7 @@ class Interface:
         turn = next(turns)
         
         while not game_over:
+             
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: quit()
 
@@ -55,6 +56,9 @@ class Interface:
                 if event.type == pygame.MOUSEBUTTONDOWN:	
                     if turn == 1 or (turn == 2 and game_mode == 1):  # get human move
                         if not game.human_move(bd, self, board, turn, event): continue  # make a move
+                        # if game.is_game_tied(board):
+                        #     self.show_draw
+                        #     break
                         if game.winning_move(board, turn): 
                             game_over = True
                             break
@@ -64,11 +68,15 @@ class Interface:
                 if turn != 1 and game_mode != 1: 
                     pygame.time.wait(15)
                     game_over = game.ai_move(bd, self, game_mode, board, turn)
-                    if game_over: break          
+                    if game_over: break     
                     turn = next(turns)
 
+            if game.is_game_tied(board) and game_over == False:
+                self.show_draw(myfont)
+                break   
 
-        self.show_winner(myfont, turn)
+        if not game.is_game_tied(board):
+            self.show_winner(myfont, turn)
         pygame.time.wait(3000)
 
 
@@ -178,6 +186,11 @@ class Interface:
         self.screen.blit(label, (350,15))
         pygame.display.update()
 
+    def show_draw(self, myfont: any) -> None:
+        """Print draw game message"""
+        label = myfont.render("Game draw!", True ,c.BUTTON_TEXT_COLOR)
+        self.screen.blit(label, (400,15))
+        pygame.display.update()
 
     def quit() -> None:
         pygame.quit()
