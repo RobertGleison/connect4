@@ -4,7 +4,7 @@ import math
 import pygame
 from game.board import Board
 import logging
-from ai_algorithms import greedy as g, alpha_beta as a
+from ai_algorithms import greedy as g, alpha_beta as a, mcts
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
@@ -39,6 +39,8 @@ def get_ai_column(board: Board, game_mode: int) -> int:
 	elif game_mode == 3:
 		chosen_column = g.predictive_greedy(board, c.AI_PIECE, c.HUMAN_PIECE)
 	elif game_mode == 4:
+		chosen_column = a.alpha_beta(board)
+	elif game_mode == 5:
 		chosen_column = a.alpha_beta(board)
 	return chosen_column
 
