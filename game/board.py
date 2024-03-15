@@ -6,7 +6,7 @@ from dataclasses import dataclass
 class Board:
     rows: int = c.ROWS
     columns: int = c.COLUMNS
-    board: int = np.zeros((rows, columns))
+    board: np.ndarray = np.zeros((rows, columns))
             
     def get_board(self) -> np.ndarray:
         return self.board

@@ -45,10 +45,11 @@ def get_ai_column(board: Board, game_mode: int) -> int:
 	return chosen_column
 
 def simulate_move(board: np.ndarray, piece: int, col: int) -> np.ndarray:
-    board_copy = board.copy()
-    row = get_next_open_row(board_copy, col)
-    drop_piece(board_copy, row, col, piece)
-    return board_copy
+	"""Simulate a move in a copy of the board"""
+	board_copy = board.copy()
+	row = get_next_open_row(board_copy, col)
+	drop_piece(board_copy, row, col, piece)
+	return board_copy
 
 def make_move(bd: Board, interface: any, board: np.ndarray, turn: int, move: int):
 	"""Make the move and see if the move is a winning one"""
@@ -76,6 +77,7 @@ def drop_piece(board: np.ndarray, row: int, col: int, piece: int) -> None:
 
 
 def is_game_tied(board: np.ndarray) -> bool:
+	"""Assert if the game is tied"""
 	for i in range(len(board)):
 		for j in range(len(board[0])):
 			if board[i][j]==0: return False

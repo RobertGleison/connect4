@@ -2,7 +2,7 @@ import numpy as np
 from game import constants as c 
 from game import game_logic as game
 import logging
-from heuristics import heuristics as h
+from heuristics import heuristic as h
 
 logging.basicConfig(level=logging.DEBUG, format='%(message)s')
 
