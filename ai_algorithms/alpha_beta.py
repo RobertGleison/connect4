@@ -1,20 +1,22 @@
 from game import constants as c
 from heuristics import heuristics as h
 from game import game_logic as game
+import time
 import logging
 
-
+#O tempo de resposta está compatível com o trabalho do matheus. No começo demora próximo de 1 segundo, mas depois passa a ser 0.5 segundos ou 0.3 segundos
 NODES_VISITED = 1
 logging.basicConfig(level=logging.DEBUG, format='%(message)s')
 
 def alpha_beta(board):
+    start_time = time.time()
     global NODES_VISITED
     NODES_VISITED = 1
     best_score = float('-inf')
     best_move = -1
     depth_limit = 5
-    
     children = get_children(board, c.AI_PIECE)
+
     for col in range(c.COLUMNS):
         child_board = children[col]
         if not game.is_valid(child_board, col): continue
@@ -24,6 +26,8 @@ def alpha_beta(board):
             best_score = current_score
         # logging.info(f"Number of nodes visited = {NODES_VISITED}")
         # logging.info(f"Score = {best_score}")
+    end_time = time.time()
+    logging.info(f"Tempo de resposta = {end_time-start_time}")
     return best_move
 
 

@@ -71,12 +71,14 @@ class Interface:
                     if game_over: break     
                     turn = next(turns)
 
+            # Evita que a ultima jogada no ultimo ponto possível retorne empate ao invès de vitória
             if game.is_game_tied(board) and game_over == False:
                 self.show_draw(myfont)
                 break   
 
         if not game.is_game_tied(board):
             self.show_winner(myfont, turn)
+            
         pygame.time.wait(3000)
 
 
@@ -122,6 +124,7 @@ class Interface:
         self.draw_button(self.height/2, 250, 300, 50, "Greedy")
         self.draw_button(self.height/2, 350, 300, 50, "Predictive Greedy")
         self.draw_button(self.height/2, 450, 300, 50, "Alpha Beta")
+        self.draw_button(self.height/2, 550, 300, 50, "MCTS")
 
 
     def choose_ai_option(self) -> int:
@@ -141,6 +144,9 @@ class Interface:
                     elif (self.width / 2 - 150) <= mouse_x <= (self.width / 2 + 150) and 450 <= mouse_y <= 500:
                         print("Alpha Beta")
                         game_mode = 4
+                    elif (self.width / 2 - 150) <= mouse_x <= (self.width / 2 + 150) and 550 <= mouse_y <= 600:
+                        print("Alpha Beta")
+                        game_mode = 5
 
                 pygame.display.flip()
                 if game_mode != 0:
