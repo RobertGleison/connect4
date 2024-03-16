@@ -1,5 +1,5 @@
 from game import constants as c
-from heuristics import heuristics as h
+from heuristics import heuristic as h
 from game import game_logic as game
 import time
 import logging
@@ -24,10 +24,11 @@ def alpha_beta(board):
         if current_score > best_score:
             best_move = col
             best_score = current_score
-        # logging.info(f"Number of nodes visited = {NODES_VISITED}")
-        # logging.info(f"Score = {best_score}")
+        logging.info(f"Number of nodes visited = {NODES_VISITED}")
+        logging.info(f"Score = {best_score}")
     end_time = time.time()
     logging.info(f"Tempo de resposta = {end_time-start_time}")
+    
     return best_move
 
 
@@ -36,7 +37,8 @@ def max_value(board, depth, alpha, beta, depth_limit: int, piece: int):
     childrens = get_children(board, c.AI_PIECE)
 
     if game.winning_move(board, piece) or depth == depth_limit:
-        return h.calculate_board_score(board, c.HUMAN_PIECE, c.AI_PIECE)
+        # return te.evaluate_board(board)
+        return h.calculate_board_score(board, c.AI_PIECE, c.HUMAN_PIECE)
 
     for move in childrens:
         score = min_value(move, depth+1, alpha, beta, depth_limit, c.AI_PIECE)
@@ -51,7 +53,8 @@ def max_value(board, depth, alpha, beta, depth_limit: int, piece: int):
 
 def min_value(board, depth: int, alpha: int, beta: int, depth_limit: int, piece: int):
     if game.winning_move(board, piece) or depth == depth_limit:
-        return h.calculate_board_score(board, c.HUMAN_PIECE, c.AI_PIECE)
+        # return te.evaluate_board(board)
+        return h.calculate_board_score(board, c.AI_PIECE, c.HUMAN_PIECE)
     min_eval = float('+inf')
     childrens = get_children(board, c.HUMAN_PIECE)
     for move in childrens:
