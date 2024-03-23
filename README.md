@@ -32,3 +32,5 @@ python3 main.py
 <img src="./assets/Screenshot from 2024-03-08 16-17-30.png">
 <img src="./assets/Screenshot from 2024-03-08 16-17-34.png">
 <img src="./assets/Screenshot from 2024-03-08 16-16-02.png">
+
+s
