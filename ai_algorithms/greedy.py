@@ -1,6 +1,6 @@
 import numpy as np
-from game import constants as c 
-from game import game_logic as game
+from game_rules import constants as c 
+from game_rules import game_logic as game
 import logging
 from heuristics import heuristic as h
 

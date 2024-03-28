@@ -1,9 +1,9 @@
 import pygame 
 import itertools
 import sys
-from game import constants as c
-from game.board import Board
-import game.game_logic as game
+from game_rules import constants as c
+from game_rules.board import Board
+import game_rules.game_logic as game
 from dataclasses import dataclass
 import logging
 
@@ -79,11 +79,11 @@ class Interface:
         if not game.is_game_tied(board):
             self.show_winner(myfont, turn)
             
-        pygame.time.wait(3000)
+        pygame.time.wait(10000)
 
 
     def draw_options_board(self):
-        """Draw the option board: player x player and player x IA"""
+        """Draw the option board: player x player and single player"""
         self.screen.fill(c.BACKGROUND_COLOR)
         font = pygame.font.Font("./fonts/04B_30__.TTF", 60)
         text_surface = font.render("Connect 4", True, c.BUTTON_TEXT_COLOR)
@@ -91,7 +91,7 @@ class Interface:
         text_rect.center = (560, 230)
         self.screen.blit(text_surface, text_rect)
         self.draw_button(self.height/2, 350, 300, 50, "Player x Player")
-        self.draw_button(self.height/2, 450, 300, 50, "Player x IA")
+        self.draw_button(self.height/2, 450, 300, 50, "Single Player") # Player x IA
 
 
     def choose_option(self) -> int:
@@ -121,14 +121,14 @@ class Interface:
 
     def draw_algorithms(self):
         self.screen.fill(c.BACKGROUND_COLOR)
-        self.draw_button(self.height/2, 250, 300, 50, "Greedy")
-        self.draw_button(self.height/2, 350, 300, 50, "Predictive Greedy")
-        self.draw_button(self.height/2, 450, 300, 50, "Alpha Beta")
-        self.draw_button(self.height/2, 550, 300, 50, "MCTS")
+        self.draw_button(self.height/2, 250, 300, 50, "facil") # A*
+        self.draw_button(self.height/2, 350, 300, 50, "medio") # A* adversarial
+        self.draw_button(self.height/2, 450, 300, 50, "dificil") # Alpha Beta
+        self.draw_button(self.height/2, 550, 300, 50, "desafio") # MCTS
 
 
     def choose_ai_option(self) -> int:
-        """Draw the ai option board: A*, MCTS, Alpha Beta"""
+        """Draw the AI option board: A*, MCTS, Alpha Beta or MCTS"""
         while True:
             game_mode = 0
             for event in pygame.event.get():
@@ -136,16 +136,16 @@ class Interface:
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     mouse_x, mouse_y = pygame.mouse.get_pos()
                     if (self.width / 2 - 150) <= mouse_x <= (self.width / 2 + 150) and 250 <= mouse_y <= 300:
-                        print("Greedy")
+                        print("A*")
                         game_mode = 2
                     elif (self.width / 2 - 150) <= mouse_x <= (self.width / 2 + 150) and 350 <= mouse_y <= 400:
-                        print("Predictive Greedy")
+                        print("A* Adversarial")
                         game_mode = 3
                     elif (self.width / 2 - 150) <= mouse_x <= (self.width / 2 + 150) and 450 <= mouse_y <= 500:
                         print("Alpha Beta")
                         game_mode = 4
                     elif (self.width / 2 - 150) <= mouse_x <= (self.width / 2 + 150) and 550 <= mouse_y <= 600:
-                        print("Alpha Beta")
+                        print("MCTS")
                         game_mode = 5
 
                 pygame.display.flip()
@@ -194,7 +194,7 @@ class Interface:
 
     def show_draw(self, myfont: any) -> None:
         """Print draw game message"""
-        label = myfont.render("Game draw!", True ,c.BUTTON_TEXT_COLOR)
+        label = myfont.render("Game tied!", True, c.BUTTON_TEXT_COLOR)
         self.screen.blit(label, (400,15))
         pygame.display.update()
 

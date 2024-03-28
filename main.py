@@ -1,5 +1,5 @@
 from game.board import Board
-from interface.interface import Interface
+from play_game.interface import Interface
 
 def main() -> None:
     board = Board()
