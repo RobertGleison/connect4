@@ -1,10 +1,10 @@
-import game.constants as c
+import game_rules.constants as c
 import numpy as np
 import math
 import pygame
-from game.board import Board
+from game_rules.board import Board
 import logging
-from ai_algorithms import greedy as g, alpha_beta as a, mcts
+from ai_algorithms import greedy as g, alpha_beta as a, mcts as m
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
@@ -24,6 +24,14 @@ def get_human_column(interface: any, event: any):
 	return col
 
 
+def available_moves(board: np.ndarray) -> list | int:
+	avaiable_moves = []
+	for i in range(c.COLUMNS):
+		if(board[5][i])==0:
+			avaiable_moves.append(i)
+	return avaiable_moves if len(avaiable_moves) > 0 else -1
+
+
 def ai_move(bd: Board, interface: any, game_mode: int, board: np.ndarray, turn: int) -> int:
 	"""Set the column of the AI move"""
 	ai_column = get_ai_column(board, game_mode)
@@ -41,7 +49,7 @@ def get_ai_column(board: Board, game_mode: int) -> int:
 	elif game_mode == 4:
 		chosen_column = a.alpha_beta(board)
 	elif game_mode == 5:
-		chosen_column = a.alpha_beta(board)
+		chosen_column = m.mcts(board)
 	return chosen_column
 
 def simulate_move(board: np.ndarray, piece: int, col: int) -> np.ndarray:

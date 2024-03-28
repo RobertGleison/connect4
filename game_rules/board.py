@@ -1,5 +1,5 @@
 import numpy as np
-from game import constants as c
+from game_rules import constants as c
 from dataclasses import dataclass
 
 @dataclass
