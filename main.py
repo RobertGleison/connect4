@@ -1,4 +1,4 @@
-from game.board import Board
+from game_rules.board import Board
 from play_game.interface import Interface
 
 def main() -> None:

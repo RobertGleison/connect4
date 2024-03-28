@@ -7,7 +7,7 @@ NODES_VISITED = 1
 logging.basicConfig(level=logging.DEBUG, format='%(message)s')
 
 
-def alpha_beta(board: np.ndarray, profundidade):
+def alpha_beta(board: np.ndarray):
     start_time = time.time()
     global NODES_VISITED
     NODES_VISITED = 1
@@ -15,7 +15,7 @@ def alpha_beta(board: np.ndarray, profundidade):
     melhor_jogada = -1
     melhor_score = float('-inf')
     for (child, col) in children:
-        score = calcular(child, 0, float('-inf'), float('+inf'), profundidade, False)
+        score = calcular(child, 0, float('-inf'), float('+inf'), 4, False)
         if score > melhor_score:
             melhor_score = score
             melhor_jogada = col
