@@ -4,7 +4,7 @@ import math
 import pygame
 from game_rules.board import Board
 import logging
-from ai_algorithms import greedy as g, alpha_beta as a, mcts as m
+from ai_algorithms import a_star as g, alpha_beta as a, mcts as m
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
